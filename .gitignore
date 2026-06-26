@@ -1,0 +1,22 @@
+# Sensitive / local data
+store_a.xlsx
+store_b.xlsx
+merged_sales.xlsx
+*.xlsx
+
+# Local debug scratch files
+cols.txt
+check.txt
+
+# Local tool/editor config
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
