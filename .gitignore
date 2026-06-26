@@ -1,8 +1,6 @@
-# Sensitive / local data
+# Raw per-store source data (superseded by merged_sales.xlsx)
 store_a.xlsx
 store_b.xlsx
-merged_sales.xlsx
-*.xlsx
 
 # Local debug scratch files
 cols.txt
