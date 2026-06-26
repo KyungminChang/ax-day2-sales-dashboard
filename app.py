@@ -54,23 +54,30 @@ def load_weather() -> dict:
 
 
 @st.cache_data
-def load_data(path: Path) -> pd.DataFrame:
-    data = pd.read_excel(path)
+def load_data(file) -> pd.DataFrame:
+    data = pd.read_excel(file)
     data = data.rename(columns={"금액": "매출액"})
     data["날짜"] = pd.to_datetime(data["날짜"])
     return data[["날짜", "지점", "상품", "매출액"]]
 
 
-if not DATA_PATH.exists():
-    st.title("매출 대시보드")
-    st.warning(
-        f"`{DATA_PATH.name}` 파일을 찾을 수 없습니다.\n\n"
-        "1교시에서 만든 `merge_sales.py`를 먼저 실행해 "
-        f"`{DATA_PATH.name}`을 이 앱과 같은 폴더에 생성해주세요."
-    )
-    st.stop()
+data_file = None
 
-df = load_data(DATA_PATH)
+if DATA_PATH.exists():
+    data_file = DATA_PATH
+else:
+    st.title("매출 대시보드")
+    st.info(
+        f"이 앱은 공개 저장소로 배포되어 민감한 매출 데이터(`{DATA_PATH.name}`)는 "
+        "저장소에 포함하지 않았습니다.\n\n"
+        "로컬에서는 `merge_sales.py`를 먼저 실행해 같은 폴더에 파일을 생성하거나, "
+        "아래에 직접 업로드해주세요."
+    )
+    data_file = st.file_uploader(f"{DATA_PATH.name} 업로드", type="xlsx")
+    if data_file is None:
+        st.stop()
+
+df = load_data(data_file)
 
 st.title("매출 대시보드")
 
